@@ -21,8 +21,8 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // home: AddLocationPage(),
       // home: LatestWeatherPage(),
-      // home: LatestWeatherPage(),
-      home: WeatherForecastPage(),
+      home: LatestWeatherPage(),
+      // home: WeatherForecastPage(),
     );
   }
 }

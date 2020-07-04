@@ -52,7 +52,7 @@ class WeatherForecastState extends State<WeatherForecast> {
             FetchWeatherData(baseURL: tempBaseUrl, query: tempQueryParameters)
                 .fetchWeatherForecast(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
             return ChangeNotifierProvider<WeatherForecastViewModel>(
               create: (context) => snapshot.data,
               builder: (context, widget) {
@@ -119,7 +119,11 @@ class WeatherForecastState extends State<WeatherForecast> {
                 );
               },
             );
-          } else {
+          }
+          else if(snapshot.hasError){
+            return Text('${snapshot.error}');
+          }
+           else {
             return Center(
               child: CircularProgressIndicator(),
             );

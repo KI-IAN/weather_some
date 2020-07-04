@@ -52,7 +52,8 @@ class _LatestWeatherState extends State<_LatestWeather> {
       future: FetchWeatherData(baseURL: tempBaseUrl, query: tempQueryParameters)
           .fetchLatestWeather(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.hasData) {
           return ChangeNotifierProvider<CurrentWeatherViewModel>(
             create: (context) => snapshot.data,
             builder: (context, widget) {
@@ -145,6 +146,8 @@ class _LatestWeatherState extends State<_LatestWeather> {
               );
             },
           );
+        } else if (snapshot.hasError) {
+          return Text('${snapshot.error}');
         } else {
           return Center(
             child: CircularProgressIndicator(),
