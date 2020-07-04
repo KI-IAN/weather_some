@@ -53,8 +53,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
 
   assets:
-    - lib/assets/images/Raining.gif
-    - lib/assets/images/Sunny.gif
+    - lib/assets/images/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

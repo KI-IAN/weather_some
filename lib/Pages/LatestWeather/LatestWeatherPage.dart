@@ -59,7 +59,7 @@ class _LatestWeatherState extends State<_LatestWeather> {
                   Center(
                       child: Image(
                           image:
-                              AssetImage(ImageAssetsLocation.rainingGifPath))),
+                              AssetImage(ImageAssetsLocation.moonBrokenCloud))),
                   Text(
                     'Latitude  : ${Provider.of<CurrentWeatherViewModel>(context, listen: false).coordinate.latitude}',
                     style: TextStyle(
