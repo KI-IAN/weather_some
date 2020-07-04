@@ -3,16 +3,17 @@ import 'package:provider/provider.dart';
 import 'package:weather_some/Common/Animations/GeneralAnimationSettings.dart';
 import 'package:weather_some/Common/Styles/GeneralStyles.dart';
 import 'package:weather_some/LanguageFiles/EnglishTexts.dart';
+import 'package:weather_some/Pages/AddLocation/Helpers/LocationSearch.dart';
 import 'package:weather_some/Pages/AddLocation/ViewModels/AddLocationViewModel.dart';
 import 'package:weather_some/Pages/AddLocation/ViewModels/LocationVMFutureProvider.dart';
 
 class AddLocationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return _buildScaffold();
+    return _buildScaffold(context);
   }
 
-  Widget _buildScaffold() => Scaffold(
+  Widget _buildScaffold(BuildContext context) => Scaffold(
         backgroundColor: Colors.lightBlue[100],
         appBar: AppBar(
           title: Text(EnglishTexts.addLocation_titleBarLabel),
@@ -23,7 +24,9 @@ class AddLocationPage extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              onPressed: null,
+              onPressed: () {
+                showSearch(context: context, delegate: LocationSearch());
+              },
             ),
           ],
         ),
@@ -42,7 +45,7 @@ class AddLocationState extends State<AddLocation> {
     return Stack(
       children: <Widget>[
         _buildLocationListView(),
-        _buildAddLocationFAB(),
+        // _buildAddLocationFAB(),
       ],
     );
   }
