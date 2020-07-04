@@ -7,7 +7,7 @@ import 'package:weather_some/LanguageFiles/EnglishTexts.dart';
 
 class LatestWeatherPage extends StatelessWidget {
   Widget _buildScaffold() => Scaffold(
-        backgroundColor: Color(0x05234b),
+        backgroundColor: Colors.indigo[300],
         appBar: AppBar(
           title: Text(EnglishTexts.addLocation_titleBarLabel),
           backgroundColor: Colors.black38,
@@ -44,7 +44,9 @@ class _LatestWeatherState extends State<_LatestWeather> {
   Widget _buildLatestWeatherView() {
     String tempBaseUrl = 'https://api.openweathermap.org/data/2.5';
     String tempApiKey = 'df8e460123d8c8ba74db460203f42191';
-    String tempQueryParameters = 'weather?q=Cheras&appid=$tempApiKey';
+    String tempUnit = 'metric';
+    String tempQueryParameters =
+        'weather?q=Cheras&appid=$tempApiKey&units=metric';
 
     return FutureBuilder<CurrentWeatherViewModel>(
       future: FetchWeatherData(baseURL: tempBaseUrl, query: tempQueryParameters)
@@ -58,21 +60,86 @@ class _LatestWeatherState extends State<_LatestWeather> {
                 children: <Widget>[
                   Center(
                       child: Image(
-                          image:
-                              AssetImage(ImageAssetsLocation.placeHolderImage))),
+                          image: AssetImage(
+                              ImageAssetsLocation.placeHolderImage))),
                   Text(
-                    'Latitude  : ${Provider.of<CurrentWeatherViewModel>(context, listen: false).coordinate.latitude}',
+                    '${Provider.of<CurrentWeatherViewModel>(context, listen: false).main.temp}°C',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 20,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 60,
                     ),
                   ),
                   Text(
-                    'Longitude : ${Provider.of<CurrentWeatherViewModel>(context, listen: false).coordinate.longitude}',
+                    '${Provider.of<CurrentWeatherViewModel>(context, listen: false).weather.description.toUpperCase()}',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 20,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 30,
                     ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        '↑ ${Provider.of<CurrentWeatherViewModel>(context, listen: false).main.maximumTemperature}°C',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal,
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(
+                        '↓ ${Provider.of<CurrentWeatherViewModel>(context, listen: false).main.minimumTemperature}°C',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'Humidity : ',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal,
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(
+                        '${Provider.of<CurrentWeatherViewModel>(context, listen: false).main.humidity}%',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'Wind : ',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal,
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(
+                        '${Provider.of<CurrentWeatherViewModel>(context, listen: false).wind.speed} m/s',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               );
