@@ -4,6 +4,7 @@ import 'package:weather_some/Experimental/PageViewDemo.dart';
 import 'package:weather_some/Experimental/PageViewIndicatorDemo.dart';
 import 'package:weather_some/Pages/AddLocation/AddLocationPage.dart';
 import 'package:weather_some/Pages/LatestWeather/LatestWeatherPage.dart';
+import 'package:weather_some/Pages/MainPage/MainAppCarouselPage.dart';
 import 'package:weather_some/Pages/WeatherForecast/WeatherForecastPage.dart';
 
 void main() {
@@ -21,8 +22,9 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // home: AddLocationPage(),
       // home: LatestWeatherPage(),
-      home: LatestWeatherPage(),
+      // home: LatestWeatherPage(),
       // home: WeatherForecastPage(),
+      home: MainAppCarouselPage(),
     );
   }
 }

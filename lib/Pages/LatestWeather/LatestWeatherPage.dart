@@ -36,21 +36,43 @@ class _LatestWeather extends StatefulWidget {
 }
 
 class _LatestWeatherState extends State<_LatestWeather> {
+  Future<CurrentWeatherViewModel> latestWeatherData;
+
   @override
-  Widget build(BuildContext context) {
-    return _buildLatestWeatherView();
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchWeatherData();
   }
 
-  Widget _buildLatestWeatherView() {
+  void fetchWeatherData() async {
     String tempBaseUrl = 'https://api.openweathermap.org/data/2.5';
     String tempApiKey = 'df8e460123d8c8ba74db460203f42191';
     String tempUnit = 'metric';
     String tempQueryParameters =
         'weather?q=Cheras&units=metric&appid=$tempApiKey';
 
+    latestWeatherData =
+        FetchWeatherData(baseURL: tempBaseUrl, query: tempQueryParameters)
+            .fetchLatestWeather();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _buildLatestWeatherView();
+  }
+
+  Widget _buildLatestWeatherView() {
+    // String tempBaseUrl = 'https://api.openweathermap.org/data/2.5';
+    // String tempApiKey = 'df8e460123d8c8ba74db460203f42191';
+    // String tempUnit = 'metric';
+    // String tempQueryParameters =
+    //     'weather?q=Cheras&units=metric&appid=$tempApiKey';
+
     return FutureBuilder<CurrentWeatherViewModel>(
-      future: FetchWeatherData(baseURL: tempBaseUrl, query: tempQueryParameters)
-          .fetchLatestWeather(),
+      // future: FetchWeatherData(baseURL: tempBaseUrl, query: tempQueryParameters)
+      //     .fetchLatestWeather(),
+      future: latestWeatherData,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.hasData) {
