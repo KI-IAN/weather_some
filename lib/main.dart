@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_some/Experimental/FetchNetworkData.dart';
 import 'package:weather_some/Experimental/PageViewDemo.dart';
 import 'package:weather_some/Experimental/PageViewIndicatorDemo.dart';
 import 'package:weather_some/Pages/AddLocation/AddLocationPage.dart';
@@ -18,6 +19,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // home: AddLocationPage(),
+      // home: LatestWeatherPage(),
       home: LatestWeatherPage(),
     );
   }
