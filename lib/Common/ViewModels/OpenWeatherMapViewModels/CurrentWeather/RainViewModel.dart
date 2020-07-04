@@ -8,4 +8,11 @@ class RainViewModel {
   num last3Hours;
 
   RainViewModel({this.last1Hour, this.last3Hours});
+
+  factory RainViewModel.fromJson(Map<String, dynamic> jsonData) {
+    return RainViewModel(
+      // last1Hour: jsonData['1h'],
+      last3Hours: jsonData['3h'],
+    );
+  }
 }

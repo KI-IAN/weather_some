@@ -50,7 +50,7 @@ class _LatestWeatherState extends State<_LatestWeather> {
 
     return FutureBuilder<CurrentWeatherViewModel>(
       future: FetchWeatherData(baseURL: tempBaseUrl, query: tempQueryParameters)
-          .fetchCurrentWeather(),
+          .fetchLatestWeather(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return ChangeNotifierProvider<CurrentWeatherViewModel>(

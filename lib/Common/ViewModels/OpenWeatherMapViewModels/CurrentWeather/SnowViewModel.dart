@@ -6,4 +6,11 @@ class SnowViewModel {
   num last3Hours;
 
   SnowViewModel({this.last1Hour, this.last3Hours});
+
+  factory SnowViewModel.fromJson(Map<String, dynamic> jsonData) {
+    return SnowViewModel(
+      // last1Hour: jsonData['1h'],
+      last3Hours: jsonData['3h'],
+    );
+  }
 }
