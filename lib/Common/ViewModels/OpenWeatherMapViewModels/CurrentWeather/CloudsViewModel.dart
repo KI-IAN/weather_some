@@ -1,6 +1,6 @@
 class CloudsViewModel {
 //clouds.all Cloudiness, %
-  int all;
+  num all;
 
   CloudsViewModel({this.all});
 

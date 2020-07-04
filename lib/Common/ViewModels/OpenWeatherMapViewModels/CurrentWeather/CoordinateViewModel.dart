@@ -1,9 +1,9 @@
 class CoordinateViewModel {
   ///City geo location, longitude
-  double longitude;
+  num longitude;
 
   ///City geo location, latitude
-  double latitude;
+  num latitude;
 
   CoordinateViewModel({this.longitude, this.latitude});
 

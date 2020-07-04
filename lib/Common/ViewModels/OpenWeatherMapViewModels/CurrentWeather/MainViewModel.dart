@@ -1,27 +1,27 @@
 class MainViewModel {
   ///Temperature. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
-  double temp;
+  num temp;
 
   ///Temperature. This temperature parameter accounts for the human
-  double feelsLike;
+  num feelsLike;
 
   ///Atmospheric pressure (on the sea level, if there is no sea_level or grnd_level data), hPa
-  int pressure;
+  num pressure;
 
   ///Humidity, %
-  int humidity;
+  num humidity;
 
   ///Minimum temperature at the moment. This is minimal currently observed temperature (within large megalopolises and urban areas). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
-  double minimumTemperature;
+  num minimumTemperature;
 
   ///Maximum temperature at the moment. This is maximal currently observed temperature (within large megalopolises and urban areas). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
-  double maximumTemperature;
+  num maximumTemperature;
 
   ///Atmospheric pressure on the sea level, hPa
-  int seaLevelPressure;
+  num seaLevelPressure;
 
   ///Atmospheric pressure on the ground level, hPa
-  int groundLevelPressure;
+  num groundLevelPressure;
 
   MainViewModel(
       {this.temp,

@@ -46,7 +46,7 @@ class _LatestWeatherState extends State<_LatestWeather> {
     String tempApiKey = 'df8e460123d8c8ba74db460203f42191';
     String tempUnit = 'metric';
     String tempQueryParameters =
-        'weather?q=Cheras&appid=$tempApiKey&units=metric';
+        'weather?q=Cheras&units=metric&appid=$tempApiKey';
 
     return FutureBuilder<CurrentWeatherViewModel>(
       future: FetchWeatherData(baseURL: tempBaseUrl, query: tempQueryParameters)
