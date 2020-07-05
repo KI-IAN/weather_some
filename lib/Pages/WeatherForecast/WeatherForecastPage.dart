@@ -116,67 +116,68 @@ class WeatherForecastState extends State<WeatherForecast> {
                       child: Card(
                         // color: Colors.indigo[300],
                         color: Colors.white,
-                        child: Wrap(
-                          direction: Axis.vertical,
-                          spacing: 12.0,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        currentItem.foreCastedDate,
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      Text(
-                                        currentItem.weather.description
-                                            .toUpperCase(),
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Image(
-                                  width: 100,
-                                  height: 100,
-                                  // image: AssetImage(
-                                  //     ImageAssetsLocation.placeHolderImage)
-                                  image: NetworkImage(
-                                      'http://openweathermap.org/img/wn/${currentItem.weather.icon}@4x.png'),
-                                ),
-                                Column(
+                            Expanded(
+                              flex: 2,
+                              child: Padding(
+                                padding: EdgeInsets.all(10),
+                                child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      '↑${currentItem.main.maximumTemperature.toStringAsFixed(2)}°C',
+                                      currentItem.foreCastedDate,
                                       style: TextStyle(
                                         fontSize: 20,
                                         color: Colors.black,
                                       ),
                                     ),
                                     Text(
-                                      '↓${currentItem.main.minimumTemperature.toStringAsFixed(2)}°C',
+                                      currentItem.weather.description
+                                          .toUpperCase(),
                                       style: TextStyle(
                                         fontSize: 15,
                                         color: Colors.black,
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
-                              ],
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Image(
+                                width: 100,
+                                height: 100,
+                                // image: AssetImage(
+                                //     ImageAssetsLocation.placeHolderImage)
+                                image: NetworkImage(
+                                    'http://openweathermap.org/img/wn/${currentItem.weather.icon}@4x.png'),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    '↑${currentItem.main.maximumTemperature.toStringAsFixed(2)}°C',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    '↓${currentItem.main.minimumTemperature.toStringAsFixed(2)}°C',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.black,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ],
                         ),

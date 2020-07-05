@@ -4,6 +4,7 @@ import 'package:weather_some/Common/Animations/GeneralAnimationSettings.dart';
 import 'package:weather_some/Common/ViewModels/SimpleMaps/CityInfoViewModels.dart';
 import 'package:weather_some/Pages/AddLocation/Helpers/LocationSearchHelper.dart';
 import 'package:weather_some/Pages/AddLocation/ViewModels/LocationSearchViewModel.dart';
+import 'package:weather_some/Pages/MainPage/MainAppCarouselPage.dart';
 
 class LocationSearch extends SearchDelegate<CityInfoViewModel> {
   @override
@@ -71,10 +72,9 @@ class LocationSearch extends SearchDelegate<CityInfoViewModel> {
                       return ListTile(
                         title: Text(currentItem.city),
                         subtitle: Text(currentItem.admin),
-                        onTap: () {
+                        onTap: () async {
                           GeneralAnimationSettings.buttonTapDelay();
-                          // query = '${currentItem.city} / ${currentItem.admin} / ${currentItem.lat} / ${currentItem.lng}';
-                          showResults(context);
+                          await addLocation(context, currentItem);
                         },
                       );
                     });
@@ -86,6 +86,18 @@ class LocationSearch extends SearchDelegate<CityInfoViewModel> {
             );
           }
         });
+  }
+
+  Future<void> addLocation(
+      BuildContext context, CityInfoViewModel cityInfo) async {
+    await Provider.of<LocationSearchViewModel>(context, listen: false)
+        .addLocation(cityInfo);
+
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => MainAppCarouselPage()),
+        (route) => false);
   }
 
   void resetQuery() {

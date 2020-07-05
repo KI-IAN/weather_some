@@ -97,6 +97,7 @@ class LocationListState extends State<LocationList> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Align(
                   child: Radio(
@@ -105,44 +106,47 @@ class LocationListState extends State<LocationList> {
                     activeColor: Colors.lightGreen,
                   ),
                 ),
-                Column(
-                  children: <Widget>[
-                    RichText(
-                      text: TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                              text:
-                                  '${currentLocationItem.cityName}, ${currentLocationItem.countryCode} ',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                              )),
-                        ],
-                      ),
-                    ),
-                    Visibility(
-                      visible: false,
-                      child: RichText(
-                        softWrap: true,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      RichText(
                         text: TextSpan(
                           children: <TextSpan>[
                             TextSpan(
-                                text: '${currentLocationItem.latitude}, ',
+                                text:
+                                    '${currentLocationItem.cityName}, ${currentLocationItem.countryCode} ',
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 20,
                                 )),
-                            TextSpan(
-                                text: "${currentLocationItem.longitude}",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                )),
                           ],
                         ),
                       ),
-                    ),
-                  ],
+                      Visibility(
+                        visible: false,
+                        child: RichText(
+                          softWrap: true,
+                          text: TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: '${currentLocationItem.latitude}, ',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                  )),
+                              TextSpan(
+                                  text: "${currentLocationItem.longitude}",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                  )),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Visibility(
                   visible:
@@ -161,7 +165,9 @@ class LocationListState extends State<LocationList> {
                           .isDeleteableProp,
                   child: IconButton(
                     icon: Icon(Icons.close),
-                    onPressed: null,
+                    onPressed: () async {
+                      await removeLocation(currentLocationItem.id);
+                    },
                   ),
                 ),
               ],
@@ -170,6 +176,11 @@ class LocationListState extends State<LocationList> {
         ),
       ),
     );
+  }
+
+  Future<void> removeLocation(int locationId) async {
+    await Provider.of<LocationListViewModel>(context, listen: false)
+        .deleteLocation(locationId);
   }
 
   Container _buildProgressIndicator() {

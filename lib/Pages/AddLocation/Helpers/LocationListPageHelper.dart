@@ -10,7 +10,8 @@ class LocationListPageHelper {
   }
 
   Future<List<LocationViewModel>> getAllLocations() async {
-    List<SavedLocation> locations = await _savedLocationRepo.allSavedLocations();
+    List<SavedLocation> locations =
+        await _savedLocationRepo.allSavedLocations();
 
     return List.generate(locations.length, (index) {
       return LocationViewModel(
@@ -26,6 +27,9 @@ class LocationListPageHelper {
     });
   }
 
+  Future<void> deleteLocation(int locationId) async {
+    SavedLocationRepository savedLocationRepo = SavedLocationRepository();
 
-
+    await savedLocationRepo.delete(locationId);
+  }
 }
