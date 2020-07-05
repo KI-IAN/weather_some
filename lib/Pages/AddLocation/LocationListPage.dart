@@ -166,7 +166,8 @@ class LocationListState extends State<LocationList> {
                   child: IconButton(
                     icon: Icon(Icons.close),
                     onPressed: () async {
-                      await removeLocation(currentLocationItem.id);
+                      await removeLocation(
+                          context, currentLocationItem, currentIndex);
                     },
                   ),
                 ),
@@ -178,9 +179,20 @@ class LocationListState extends State<LocationList> {
     );
   }
 
-  Future<void> removeLocation(int locationId) async {
+  Future<void> removeLocation(
+    BuildContext context,
+    LocationViewModel data,
+    int currentIndex,
+  ) async {
     await Provider.of<LocationListViewModel>(context, listen: false)
-        .deleteLocation(locationId);
+        .deleteLocation(data.id);
+
+    locationListViewKey.currentState.removeItem(
+        currentIndex,
+        (context, animation) => SizeTransition(
+              sizeFactor: animation,
+              child: _buildLocationItem(data, context, currentIndex),
+            ));
   }
 
   Container _buildProgressIndicator() {
