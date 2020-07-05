@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_some/Common/Animations/GeneralAnimationSettings.dart';
+import 'package:weather_some/Common/CustomWidgets/CustomProgressIndicator.dart';
 import 'package:weather_some/Common/Styles/GeneralStyles.dart';
 import 'package:weather_some/LanguageFiles/EnglishTexts.dart';
 import 'package:weather_some/Pages/AddLocation/Helpers/LocationSearch.dart';
@@ -62,27 +63,30 @@ class LocationListState extends State<LocationList> {
           return ChangeNotifierProvider<LocationListViewModel>(
             create: (context) => snapshot.data,
             builder: (context, widget) {
-              return AnimatedList(
-                key: locationListViewKey,
-                initialItemCount:
-                    Provider.of<LocationListViewModel>(context, listen: false)
-                        .locationList
-                        .length,
-                itemBuilder: (context, currentIndex, animation) {
-                  var currentLocationItem =
-                      Provider.of<LocationListViewModel>(context, listen: false)
-                          .locationList
-                          .elementAt(currentIndex);
-
-                  return _buildLocationItem(
-                      currentLocationItem, context, currentIndex);
-                },
-              );
+              return _buildAnimatedList(context);
             },
           );
         } else {
           return _buildProgressIndicator();
         }
+      },
+    );
+  }
+
+  Widget _buildAnimatedList(BuildContext context) {
+    return AnimatedList(
+      key: locationListViewKey,
+      initialItemCount:
+          Provider.of<LocationListViewModel>(context, listen: false)
+              .locationList
+              .length,
+      itemBuilder: (context, currentIndex, animation) {
+        var currentLocationItem =
+            Provider.of<LocationListViewModel>(context, listen: false)
+                .locationList
+                .elementAt(currentIndex);
+
+        return _buildLocationItem(currentLocationItem, context, currentIndex);
       },
     );
   }
@@ -112,6 +116,7 @@ class LocationListState extends State<LocationList> {
                             listen: false)
                         .setSelectedLocation(value);
 
+                    //Need to find a better way as it rebuilds the whole listview. But all I need is to select different radio button!!!!
                     setState(() {});
                   },
                   value: currentLocationItem.id,
@@ -206,28 +211,12 @@ class LocationListState extends State<LocationList> {
             ));
   }
 
-  Container _buildProgressIndicator() {
-    return Container(
-        color: Colors.white,
-        child: Center(
-          child: CircularProgressIndicator(),
-        ));
-  }
-
-  Widget _buildAddLocationFAB() {
-    return Container(
-      padding: EdgeInsets.all(15),
-      alignment: Alignment.bottomRight,
-      child: FloatingActionButton(
-          splashColor: GeneralStyles.buttonSplashColor(),
-          backgroundColor: Colors.lightBlue,
-          onPressed: () async {
-            await GeneralAnimationSettings.buttonTapDelay();
-          },
-          child: Icon(
-            Icons.add,
-            color: Colors.white,
-          )),
-    );
+  Widget _buildProgressIndicator() {
+    // return Container(
+    //     color: Colors.white,
+    //     child: Center(
+    //       child: CircularProgressIndicator(),
+    //     ));
+    return CustomProgressIndicator();
   }
 }
