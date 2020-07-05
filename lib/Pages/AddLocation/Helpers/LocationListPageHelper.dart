@@ -29,9 +29,33 @@ class LocationListPageHelper {
     });
   }
 
-  Future<void> deleteLocation(int locationId) async {
+  Future<void> deleteLocation(
+      int locationId, int currentlySelectedLocationId) async {
     SavedLocationRepository savedLocationRepo = SavedLocationRepository();
+
+    var isSelectedLocationToBeDeleted =
+        (locationId == currentlySelectedLocationId);
+
+    if (isSelectedLocationToBeDeleted) {
+      await setFirstLocationAsSelected();
+    }
+
     await savedLocationRepo.delete(locationId);
+  }
+
+  Future<void> setFirstLocationAsSelected() async {
+    Database db = await WeatherSomeDBContext().initializeDatabase();
+
+    String query = '''
+Update savedLocation
+set isSelectedCity = 1
+where id IN 
+(Select id from savedLocation 
+order by id ASC
+LIMIT 1);
+''';
+
+    await db.rawUpdate(query);
   }
 
   Future<void> setSelectedLocation(int locationId) async {

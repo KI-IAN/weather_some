@@ -209,6 +209,8 @@ class LocationListState extends State<LocationList> {
               sizeFactor: animation,
               child: _buildLocationItem(data, context, currentIndex),
             ));
+
+    setState(() {});
   }
 
   Widget _buildProgressIndicator() {

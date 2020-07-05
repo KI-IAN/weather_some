@@ -26,7 +26,8 @@ class LocationListViewModel extends BaseViewModel {
   Future<void> deleteLocation(int locationId) async {
     LocationListPageHelper helper = LocationListPageHelper();
 
-    await helper.deleteLocation(locationId);
+
+    await helper.deleteLocation(locationId, selectedLocationId);
 
     locationList.remove(locationList.where((r) => r.id == locationId).first);
 
