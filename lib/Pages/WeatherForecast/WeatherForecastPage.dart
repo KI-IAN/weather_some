@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_some/AssetFiles/ImageAssetsLocation.dart';
+import 'package:weather_some/Common/CustomWidgets/CustomProgressIndicator.dart';
 import 'package:weather_some/Common/Helpers/FetchWeatherData.dart';
 import 'package:weather_some/Common/ViewModels/OpenWeatherMapViewModels/WeatherForecast/WeatherForecastViewModel.dart';
 import 'package:weather_some/Pages/AddLocation/ViewModels/LocationViewModel.dart';
@@ -50,11 +50,7 @@ class WeatherForecastPage extends StatelessWidget {
               child: Text('${snapshot.error}'),
             );
           } else {
-            return Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.white,
-              ),
-            );
+            return CustomProgressIndicator();
           }
         },
       );
@@ -193,18 +189,7 @@ class WeatherForecastState extends State<WeatherForecast> {
           } else if (snapshot.hasError) {
             return Text('${snapshot.error}');
           } else {
-            return Center(
-              
-              child: Container(
-                  width: 190.0,
-                  height: 190.0,
-                  decoration: new BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: new DecorationImage(
-                          fit: BoxFit.fill,
-                          image: new AssetImage(
-                              ImageAssetsLocation.cloudSunReloader)))),
-            );
+            return CustomProgressIndicator();
           }
         });
   }

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_some/AssetFiles/ImageAssetsLocation.dart';
+import 'package:weather_some/Common/CustomWidgets/CustomProgressIndicator.dart';
 import 'package:weather_some/Common/Helpers/FetchWeatherData.dart';
 import 'package:weather_some/Common/ViewModels/OpenWeatherMapViewModels/CurrentWeather/CurrentWeatherViewModel.dart';
-import 'package:weather_some/LanguageFiles/EnglishTexts.dart';
 import 'package:weather_some/Pages/AddLocation/ViewModels/LocationViewModel.dart';
 import 'package:weather_some/Pages/LatestWeather/Helper/LatestWeatherPageHelper.dart';
 
@@ -29,9 +28,7 @@ class LatestWeatherPage extends StatelessWidget {
                           Icons.refresh,
                           color: Colors.white,
                         ),
-                        onPressed: (){
-                          
-                        },
+                        onPressed: () {},
                       ),
                     ],
                   ),
@@ -213,11 +210,7 @@ class _LatestWeatherState extends State<_LatestWeather> {
         } else if (snapshot.hasError) {
           return Center(child: Text('${snapshot.error}'));
         } else {
-          return Center(
-            child: CircularProgressIndicator(
-              backgroundColor: Colors.white,
-            ),
-          );
+          return CustomProgressIndicator();
         }
       },
     );
