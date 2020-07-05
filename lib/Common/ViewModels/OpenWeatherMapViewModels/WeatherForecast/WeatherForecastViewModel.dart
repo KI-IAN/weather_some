@@ -33,9 +33,25 @@ class WeatherForecastViewModel extends BaseViewModel {
       message: jsonData['message'],
       city: CityViewModel.fromJson(jsonData['city']),
       totalResultCount: jsonData['cnt'],
-      forecastList: convertToForecastViewModel(jsonData['list']),
+      forecastList:
+          getNextNDaysForecast(5, convertToForecastViewModel(jsonData['list'])),
     );
   }
+}
+
+List<ForecastListViewModel> getNextNDaysForecast(
+    int numberOfDays, List<ForecastListViewModel> forecastList) {
+  int totalData = forecastList.length;
+
+  int incrementValue = totalData ~/ numberOfDays;
+
+  List<ForecastListViewModel> filteredList = List<ForecastListViewModel>();
+
+  for (int index = 0; index < totalData; index = index + incrementValue) {
+    filteredList.add(forecastList.elementAt(index));
+  }
+
+  return filteredList;
 }
 
 List<ForecastListViewModel> convertToForecastViewModel(List<dynamic> jsonData) {

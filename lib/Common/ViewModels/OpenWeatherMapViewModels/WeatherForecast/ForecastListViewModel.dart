@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+import 'package:intl/intl.dart';
 import 'package:weather_some/Common/ViewModels/OpenWeatherMapViewModels/CurrentWeather/CloudsViewModel.dart';
 import 'package:weather_some/Common/ViewModels/OpenWeatherMapViewModels/CurrentWeather/MainViewModel.dart';
 import 'package:weather_some/Common/ViewModels/OpenWeatherMapViewModels/CurrentWeather/RainViewModel.dart';
@@ -10,6 +9,12 @@ import 'package:weather_some/Common/ViewModels/OpenWeatherMapViewModels/CurrentW
 class ForecastListViewModel {
   ///list.dt Time of data forecasted, unix, UTC
   num forecastedDateTime;
+
+  String get foreCastedDate {
+    var date = DateTime.parse(forecastedDateTimeInString);
+    final dateFormat = new DateFormat('dd MMMM');
+    return '${dateFormat.format(date)}';
+  }
 
   ///list.main
   MainViewModel main;

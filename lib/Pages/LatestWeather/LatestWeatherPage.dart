@@ -39,7 +39,9 @@ class LatestWeatherPage extends StatelessWidget {
             );
           } else {
             return Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.white,
+              ),
             );
           }
         },
@@ -203,10 +205,12 @@ class _LatestWeatherState extends State<_LatestWeather> {
             },
           );
         } else if (snapshot.hasError) {
-          return Text('${snapshot.error}');
+          return Center(child: Text('${snapshot.error}'));
         } else {
           return Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.white,
+            ),
           );
         }
       },
