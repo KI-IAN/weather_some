@@ -1,11 +1,11 @@
-import 'package:weather_some/Pages/AddLocation/Helpers/AddLocationPageHelper.dart';
-import 'package:weather_some/Pages/AddLocation/ViewModels/AddLocationViewModel.dart';
+import 'package:weather_some/Pages/AddLocation/Helpers/LocationListPageHelper.dart';
+import 'package:weather_some/Pages/AddLocation/ViewModels/LocationListViewModel.dart';
 
 class LocationVMFutureProvider {
-  Future<AddLocationViewModel> getAllLocations() async {
-    AddLoctionPageHelper helper = AddLoctionPageHelper();
+  Future<LocationListViewModel> getAllLocations() async {
+    LocationListPageHelper helper = LocationListPageHelper();
 
-    AddLocationViewModel location = AddLocationViewModel();
+    LocationListViewModel location = LocationListViewModel();
 
     location.locationList = await helper.getAllLocations();
 

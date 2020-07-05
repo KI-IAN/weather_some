@@ -4,17 +4,17 @@ import 'package:weather_some/Common/Animations/GeneralAnimationSettings.dart';
 import 'package:weather_some/Common/Styles/GeneralStyles.dart';
 import 'package:weather_some/LanguageFiles/EnglishTexts.dart';
 import 'package:weather_some/Pages/AddLocation/Helpers/LocationSearch.dart';
-import 'package:weather_some/Pages/AddLocation/ViewModels/AddLocationViewModel.dart';
+import 'package:weather_some/Pages/AddLocation/ViewModels/LocationListViewModel.dart';
 import 'package:weather_some/Pages/AddLocation/ViewModels/LocationVMFutureProvider.dart';
 
-class AddLocationPage extends StatelessWidget {
+class LocationListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _buildScaffold(context);
   }
 
   Widget _buildScaffold(BuildContext context) => Scaffold(
-        backgroundColor: Colors.lightBlue[100],
+        backgroundColor: Colors.indigo[300],
         appBar: AppBar(
           title: Text(EnglishTexts.addLocation_titleBarLabel),
           backgroundColor: Colors.black38,
@@ -30,16 +30,16 @@ class AddLocationPage extends StatelessWidget {
             ),
           ],
         ),
-        body: AddLocation(),
+        body: LocationList(),
       );
 }
 
-class AddLocation extends StatefulWidget {
+class LocationList extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => AddLocationState();
+  State<StatefulWidget> createState() => LocationListState();
 }
 
-class AddLocationState extends State<AddLocation> {
+class LocationListState extends State<LocationList> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -58,18 +58,18 @@ class AddLocationState extends State<AddLocation> {
       future: LocationVMFutureProvider().getAllLocations(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return ChangeNotifierProvider<AddLocationViewModel>(
+          return ChangeNotifierProvider<LocationListViewModel>(
             create: (context) => snapshot.data,
             builder: (context, widget) {
               return AnimatedList(
                 key: locationListViewKey,
                 initialItemCount:
-                    Provider.of<AddLocationViewModel>(context, listen: false)
+                    Provider.of<LocationListViewModel>(context, listen: false)
                         .locationList
                         .length,
                 itemBuilder: (context, currentIndex, animation) {
                   var currentLocationItem =
-                      Provider.of<AddLocationViewModel>(context, listen: false)
+                      Provider.of<LocationListViewModel>(context, listen: false)
                           .locationList
                           .elementAt(currentIndex);
 
@@ -77,7 +77,6 @@ class AddLocationState extends State<AddLocation> {
                     padding: EdgeInsets.all(5),
                     height: 80,
                     child: Card(
-                      color: Colors.transparent,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -85,6 +84,8 @@ class AddLocationState extends State<AddLocation> {
                             children: <Widget>[
                               Align(
                                 child: Radio(
+                                  onChanged: (value) {},
+                                  value: currentLocationItem.isSelectedCity,
                                   activeColor: Colors.lightGreen,
                                 ),
                               ),
@@ -95,50 +96,63 @@ class AddLocationState extends State<AddLocation> {
                                       children: <TextSpan>[
                                         TextSpan(
                                             text:
-                                                '${currentLocationItem.locationName}, ',
+                                                '${currentLocationItem.cityName}, ${currentLocationItem.countryCode} ',
                                             style: TextStyle(
                                               color: Colors.black,
                                               fontSize: 20,
-                                            )),
-                                        TextSpan(
-                                            text:
-                                                "${currentLocationItem.currentDateTime.toString()}",
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 10,
                                             )),
                                       ],
                                     ),
                                   ),
-                                  RichText(
-                                    softWrap: true,
-                                    text: TextSpan(
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                            text:
-                                                '${currentLocationItem.currentTemperature.toStringAsFixed(2)}, ',
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                            )),
-                                        TextSpan(
-                                            text:
-                                                "${currentLocationItem.weatherDescription}",
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14,
-                                            )),
-                                      ],
+                                  Visibility(
+                                    visible: false,
+                                    child: RichText(
+                                      softWrap: true,
+                                      text: TextSpan(
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                              text:
+                                                  '${currentLocationItem.latitude}, ',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 20,
+                                              )),
+                                          TextSpan(
+                                              text:
+                                                  "${currentLocationItem.longitude}",
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14,
+                                              )),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
-                              Container(
-                                  height: 50,
-                                  child: VerticalDivider(color: Colors.black)),
-                              IconButton(
-                                icon: Icon(Icons.close),
-                                onPressed: null,
+                              Visibility(
+                                visible: Provider.of<LocationListViewModel>(
+                                        context,
+                                        listen: false)
+                                    .locationList
+                                    .elementAt(currentIndex)
+                                    .isDeleteableProp,
+                                child: Container(
+                                    height: 50,
+                                    child:
+                                        VerticalDivider(color: Colors.black)),
+                              ),
+                              Visibility(
+                                visible: Provider.of<LocationListViewModel>(
+                                        context,
+                                        listen: false)
+                                    .locationList
+                                    .elementAt(currentIndex)
+                                    .isDeleteableProp,
+                                child: IconButton(
+                                  icon: Icon(Icons.close),
+                                  onPressed: null,
+                                ),
                               ),
                             ],
                           ),
