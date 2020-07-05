@@ -40,6 +40,7 @@ static String nosunSnowFallRain = '$imageAssetBasetPath/nosun_snow_fall_rain.png
 
 static String placeHolderImage = '$imageAssetBasetPath/placeholder.jpg';
 
+static String cloudSunReloader = '$imageAssetBasetPath/cloud_sun_reloader.gif';
 
 
 }

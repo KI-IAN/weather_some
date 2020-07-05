@@ -116,52 +116,72 @@ class WeatherForecastState extends State<WeatherForecast> {
 
                     return Container(
                       padding: EdgeInsets.all(5),
-                      height: 80,
+                      height: 100,
                       child: Card(
                         // color: Colors.indigo[300],
-                        color: Colors.transparent,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        color: Colors.white,
+                        child: Wrap(
+                          direction: Axis.vertical,
+                          spacing: 12.0,
                           children: <Widget>[
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
-                                Text(
-                                  currentItem.foreCastedDate,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.white,
+                                Padding(
+                                  padding: EdgeInsets.all(10),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        currentItem.foreCastedDate,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      Text(
+                                        currentItem.weather.description
+                                            .toUpperCase(),
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                Text(
-                                  currentItem.weather.description.toUpperCase(),
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.white,
-                                  ),
+                                Image(
+                                  width: 100,
+                                  height: 100,
+                                  // image: AssetImage(
+                                  //     ImageAssetsLocation.placeHolderImage)
+                                  image: NetworkImage(
+                                      'http://openweathermap.org/img/wn/${currentItem.weather.icon}@4x.png'),
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      '↑${currentItem.main.maximumTemperature.toStringAsFixed(2)}°C',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    Text(
+                                      '↓${currentItem.main.minimumTemperature.toStringAsFixed(2)}°C',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.black,
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ],
                             ),
-                            Image(
-                                width: 40,
-                                height: 40,
-                                image: AssetImage(
-                                    ImageAssetsLocation.placeHolderImage)),
-                            Text(
-                              '↑${currentItem.main.maximumTemperature.toStringAsFixed(2)}°C',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                              ),
-                            ),
-                            Text(
-                              '↓${currentItem.main.minimumTemperature.toStringAsFixed(2)}°C',
-                              style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.white54,
-                              ),
-                            )
                           ],
                         ),
                       ),
@@ -174,9 +194,16 @@ class WeatherForecastState extends State<WeatherForecast> {
             return Text('${snapshot.error}');
           } else {
             return Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.white,
-              ),
+              
+              child: Container(
+                  width: 190.0,
+                  height: 190.0,
+                  decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: new DecorationImage(
+                          fit: BoxFit.fill,
+                          image: new AssetImage(
+                              ImageAssetsLocation.cloudSunReloader)))),
             );
           }
         });

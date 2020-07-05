@@ -29,7 +29,9 @@ class LatestWeatherPage extends StatelessWidget {
                           Icons.refresh,
                           color: Colors.white,
                         ),
-                        onPressed: null,
+                        onPressed: (){
+                          
+                        },
                       ),
                     ],
                   ),
@@ -114,9 +116,12 @@ class _LatestWeatherState extends State<_LatestWeather> {
               return Column(
                 children: <Widget>[
                   Center(
+                      // child: Image(
+                      //     image: AssetImage(
+                      //         ImageAssetsLocation.placeHolderImage))),
                       child: Image(
-                          image: AssetImage(
-                              ImageAssetsLocation.placeHolderImage))),
+                          image: NetworkImage(
+                              'http://openweathermap.org/img/wn/${Provider.of<CurrentWeatherViewModel>(context, listen: false).weather.icon}@4x.png'))),
                   Text(
                     '${Provider.of<CurrentWeatherViewModel>(context, listen: false).main.temp}°C',
                     style: TextStyle(
@@ -127,10 +132,11 @@ class _LatestWeatherState extends State<_LatestWeather> {
                   ),
                   Text(
                     '${Provider.of<CurrentWeatherViewModel>(context, listen: false).weather.description.toUpperCase()}',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
                       fontStyle: FontStyle.normal,
-                      fontSize: 30,
+                      fontSize: 25,
                     ),
                   ),
                   Row(
