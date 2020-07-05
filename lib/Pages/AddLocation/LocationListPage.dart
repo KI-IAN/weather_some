@@ -99,12 +99,23 @@ class LocationListState extends State<LocationList> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Align(
-                  child: Radio(
-                    onChanged: (value) {},
-                    value: currentLocationItem.isSelectedCity,
-                    activeColor: Colors.lightGreen,
-                  ),
+                Radio(
+                  groupValue:
+                      Provider.of<LocationListViewModel>(context, listen: false)
+                          .selectedLocationId,
+                  onChanged: (value) async {
+                    Provider.of<LocationListViewModel>(context, listen: false)
+                        .selectedLocationId = value;
+
+                    //update choosen city in DB
+                    await Provider.of<LocationListViewModel>(context,
+                            listen: false)
+                        .setSelectedLocation(value);
+
+                    setState(() {});
+                  },
+                  value: currentLocationItem.id,
+                  activeColor: Colors.lightGreen,
                 ),
                 Expanded(
                   child: Column(
