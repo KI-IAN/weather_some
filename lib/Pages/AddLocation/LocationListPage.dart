@@ -362,7 +362,7 @@ class LocationListState extends State<LocationList> {
 
   Widget _buildProgressIndicator() {
     return Container(
-        color: Colors.white,
+        color: GeneralStyles.appPrimaryColor(),
         child: Center(
           child: CircularProgressIndicator(),
         ));
