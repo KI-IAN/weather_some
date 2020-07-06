@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_some/Common/Animations/GeneralAnimationSettings.dart';
 import 'package:weather_some/Common/CustomWidgets/CustomProgressIndicator.dart';
@@ -16,17 +17,86 @@ class LocationListPage extends StatelessWidget {
   }
 
   Widget _buildScaffold(BuildContext context) => Scaffold(
-        backgroundColor: Colors.indigo[300],
+        backgroundColor: GeneralStyles.appPrimaryColor(),
         appBar: AppBar(
           title: Text(EnglishTexts.addLocation_titleBarLabel),
-          backgroundColor: Colors.black38,
+          backgroundColor: GeneralStyles.appPrimaryColor(),
+          elevation: 0,
           actions: <Widget>[
             IconButton(
+              icon: Icon(
+                Icons.gps_fixed,
+                color: Colors.white,
+              ),
+              onPressed: () async {
+                GeneralAnimationSettings.buttonTapDelay();
+
+                // //Get Current Location
+                // var currentLocation = await getCurrentLocation();
+
+                return showDialog(
+                    context: context,
+                    builder: (context) {
+                      return FutureBuilder(
+                          future: getCurrentLocation(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData &&
+                                snapshot.connectionState ==
+                                    ConnectionState.done) {
+                              return AlertDialog(
+                                title: Text('GPS Location'),
+                                actions: <Widget>[
+                                  RaisedButton(
+                                    color: Colors.blueGrey,
+                                    onPressed: () {
+                                      GeneralAnimationSettings.buttonTapDelay();
+                                      Navigator.pop(context);
+                                    },
+                                    child:
+                                        Icon(Icons.close, color: Colors.white),
+                                  ),
+                                  RaisedButton(
+                                    color: Colors.lightGreen,
+                                    onPressed: () {
+                                      GeneralAnimationSettings.buttonTapDelay();
+                                    },
+                                    child:
+                                        Icon(Icons.save, color: Colors.white),
+                                  ),
+                                ],
+                                content: SingleChildScrollView(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text('Location : '),
+                                      Text(
+                                          'Latitude  : ${snapshot.data.latitude}'),
+                                      Text(
+                                          'Longitude : ${snapshot.data.longitude}'),
+                                      Text(
+                                          'Do you want to save this location?'),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            } else if (snapshot.hasError) {
+                              return Text('Error');
+                            } else {
+                              return CustomProgressIndicator();
+                            }
+                          });
+                    });
+              },
+            ),
+            IconButton(
+              splashColor: GeneralStyles.buttonSplashColor(),
               icon: Icon(
                 Icons.add,
                 color: Colors.white,
               ),
               onPressed: () {
+                GeneralAnimationSettings.buttonTapDelay();
                 showSearch(context: context, delegate: LocationSearch());
               },
             ),
@@ -34,6 +104,18 @@ class LocationListPage extends StatelessWidget {
         ),
         body: LocationList(),
       );
+
+  Future<LocationData> getCurrentLocation() async {
+    var location = new Location();
+    // var currentLocation = <String, double>{};
+    LocationData currentLocation;
+    try {
+      currentLocation = await location.getLocation();
+    } catch (e) {
+      currentLocation = null;
+    }
+    return currentLocation;
+  }
 }
 
 class LocationList extends StatefulWidget {
@@ -214,11 +296,11 @@ class LocationListState extends State<LocationList> {
   }
 
   Widget _buildProgressIndicator() {
-    // return Container(
-    //     color: Colors.white,
-    //     child: Center(
-    //       child: CircularProgressIndicator(),
-    //     ));
-    return CustomProgressIndicator();
+    return Container(
+        color: Colors.white,
+        child: Center(
+          child: CircularProgressIndicator(),
+        ));
+    // return CustomProgressIndicator();
   }
 }

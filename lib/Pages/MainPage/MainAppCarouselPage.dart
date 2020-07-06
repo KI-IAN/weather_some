@@ -33,16 +33,8 @@ class MainAppCarouselPage extends StatelessWidget {
 
                 return selectedPageView;
               }),
-          // PageView(
-          //   children: <Widget>[
-          //     AddLocationPage(),
-          //     LatestWeatherPage(),
-          //     WeatherForecastPage(),
-          //   ],
-          // ),
+
           _buildCircularIndicator(),
-          // _buildCircularIndicator2(),
-          // _buildIconIndicator(),
         ],
       ),
     );
@@ -63,7 +55,6 @@ class MainAppCarouselPage extends StatelessWidget {
         ),
         child: Circle(
           size: 16.0,
-          // color: Colors.accents.elementAt((index + length) * length),
           color: Colors.white,
         ),
       ),

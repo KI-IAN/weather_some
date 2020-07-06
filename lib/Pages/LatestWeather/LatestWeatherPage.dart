@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_some/Common/CustomWidgets/CustomProgressIndicator.dart';
 import 'package:weather_some/Common/Helpers/FetchWeatherData.dart';
+import 'package:weather_some/Common/Styles/GeneralStyles.dart';
 import 'package:weather_some/Common/ViewModels/OpenWeatherMapViewModels/CurrentWeather/CurrentWeatherViewModel.dart';
 import 'package:weather_some/Pages/AddLocation/ViewModels/LocationViewModel.dart';
 import 'package:weather_some/Pages/LatestWeather/Helper/LatestWeatherPageHelper.dart';
@@ -16,12 +17,12 @@ class LatestWeatherPage extends StatelessWidget {
               create: (context) => snapshot.data,
               builder: (context, widget) {
                 return Scaffold(
-                  backgroundColor: Colors.indigo[300],
+                  backgroundColor: GeneralStyles.appPrimaryColor(),
                   appBar: AppBar(
                     title: Text(
                         Provider.of<LocationViewModel>(context, listen: false)
                             .cityName),
-                    backgroundColor: Colors.black38,
+                    backgroundColor: GeneralStyles.appPrimaryColor(),
                     actions: <Widget>[
                       IconButton(
                         icon: Icon(

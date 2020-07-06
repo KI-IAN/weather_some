@@ -9,10 +9,6 @@ import 'package:weather_some/Pages/MainPage/MainAppCarouselPage.dart';
 import 'package:weather_some/Pages/WeatherForecast/WeatherForecastPage.dart';
 
 void main() {
-  // runApp(
-  //     // PageViewDemoPage()
-  //     PageViewIndicatorDemo());
-
   runApp(MainApp());
 }
 
