@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_some/Common/Animations/GeneralAnimationSettings.dart';
+import 'package:weather_some/Common/CustomWidgets/ConnectivityIssue.dart';
 import 'package:weather_some/Common/CustomWidgets/CustomProgressIndicator.dart';
 import 'package:weather_some/Common/Styles/GeneralStyles.dart';
 import 'package:weather_some/LanguageFiles/EnglishTexts.dart';
@@ -90,7 +91,7 @@ class LocationListPageState extends State<LocationListPage> {
                         },
                       );
                     } else if (snapshot.hasError) {
-                      return Text('Error');
+                      return ConnectivityIssue();
                     } else {
                       return CustomProgressIndicator();
                     }
