@@ -20,9 +20,18 @@ class LatestWeatherPage extends StatelessWidget {
                   backgroundColor: GeneralStyles.appPrimaryColor(),
                   appBar: AppBar(
                     elevation: 0,
-                    title: Text(
-                        Provider.of<LocationViewModel>(context, listen: false)
-                            .cityName),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                            '${Provider.of<LocationViewModel>(context, listen: false).cityName}'),
+                        Text(
+                          'Latest Weather',
+                          style: TextStyle(fontSize: 12, color: Colors.white60),
+                          textAlign: TextAlign.left,
+                        ),
+                      ],
+                    ),
                     backgroundColor: GeneralStyles.appPrimaryColor(),
                     actions: <Widget>[
                       IconButton(

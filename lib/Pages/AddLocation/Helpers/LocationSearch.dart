@@ -16,10 +16,6 @@ class LocationSearch extends SearchDelegate<CityInfoViewModel> {
           resetQuery();
         },
       ),
-      IconButton(
-        icon: Icon(Icons.gps_fixed),
-        onPressed: () {},
-      ),
     ];
   }
 

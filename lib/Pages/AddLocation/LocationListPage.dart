@@ -70,7 +70,7 @@ class LocationListPage extends StatelessWidget {
                           snapshot.connectionState ==
                               ConnectionState.done) {
                         return AlertDialog(
-                          title: Text('GPS Location'),
+                          title: Text('Your Location'),
                           actions: <Widget>[
                             RaisedButton(
                               color: Colors.blueGrey,
