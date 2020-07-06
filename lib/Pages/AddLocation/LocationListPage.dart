@@ -5,6 +5,7 @@ import 'package:weather_some/Common/Animations/GeneralAnimationSettings.dart';
 import 'package:weather_some/Common/CustomWidgets/CustomProgressIndicator.dart';
 import 'package:weather_some/Common/Styles/GeneralStyles.dart';
 import 'package:weather_some/LanguageFiles/EnglishTexts.dart';
+import 'package:weather_some/Pages/AddLocation/Helpers/LocationListPageHelper.dart';
 import 'package:weather_some/Pages/AddLocation/Helpers/LocationSearch.dart';
 import 'package:weather_some/Pages/AddLocation/ViewModels/GeoLocationVMFutureProvider.dart';
 import 'package:weather_some/Pages/AddLocation/ViewModels/GeoLocationViewModel.dart';
@@ -12,10 +13,15 @@ import 'package:weather_some/Pages/AddLocation/ViewModels/LocationListViewModel.
 import 'package:weather_some/Pages/AddLocation/ViewModels/LocationVMFutureProvider.dart';
 import 'package:weather_some/Pages/AddLocation/ViewModels/LocationViewModel.dart';
 
-GlobalKey<AnimatedListState> locationListViewKey =
-    GlobalKey<AnimatedListState>();
+// GlobalKey<AnimatedListState> locationListViewKey =
+//     GlobalKey<AnimatedListState>();
 
-class LocationListPage extends StatelessWidget {
+class LocationListPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => LocationListPageState();
+}
+
+class LocationListPageState extends State<LocationListPage> {
   @override
   Widget build(BuildContext context) {
     return _buildScaffold(context);
@@ -169,13 +175,12 @@ class LocationListPage extends StatelessWidget {
           await Provider.of<GeoLocationViewModel>(context, listen: false)
               .addLocation();
           Navigator.pop(context);
-          
+          setState(() {});
         },
         child: Icon(Icons.save, color: Colors.white),
       ),
     ];
   }
-
 }
 
 class LocationList extends StatefulWidget {
@@ -194,8 +199,8 @@ class LocationListState extends State<LocationList> {
     );
   }
 
-  // GlobalKey<AnimatedListState> locationListViewKey =
-  //     GlobalKey<AnimatedListState>();
+  GlobalKey<AnimatedListState> locationListViewKey =
+      GlobalKey<AnimatedListState>();
 
   Widget _buildLocationListView() {
     return FutureBuilder(
