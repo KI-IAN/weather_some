@@ -6,9 +6,14 @@ import 'package:weather_some/Common/CustomWidgets/CustomProgressIndicator.dart';
 import 'package:weather_some/Common/Styles/GeneralStyles.dart';
 import 'package:weather_some/LanguageFiles/EnglishTexts.dart';
 import 'package:weather_some/Pages/AddLocation/Helpers/LocationSearch.dart';
+import 'package:weather_some/Pages/AddLocation/ViewModels/GeoLocationVMFutureProvider.dart';
+import 'package:weather_some/Pages/AddLocation/ViewModels/GeoLocationViewModel.dart';
 import 'package:weather_some/Pages/AddLocation/ViewModels/LocationListViewModel.dart';
 import 'package:weather_some/Pages/AddLocation/ViewModels/LocationVMFutureProvider.dart';
 import 'package:weather_some/Pages/AddLocation/ViewModels/LocationViewModel.dart';
+
+GlobalKey<AnimatedListState> locationListViewKey =
+    GlobalKey<AnimatedListState>();
 
 class LocationListPage extends StatelessWidget {
   @override
@@ -24,110 +29,153 @@ class LocationListPage extends StatelessWidget {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-        title: Text(EnglishTexts.addLocation_titleBarLabel),
-        backgroundColor: GeneralStyles.appPrimaryColor(),
-        elevation: 0,
-        actions: _buildAppBarActions(context),
-      );
+      title: Text(EnglishTexts.addLocation_titleBarLabel),
+      backgroundColor: GeneralStyles.appPrimaryColor(),
+      elevation: 0,
+      actions: _buildAppBarActions(context),
+    );
   }
 
   List<Widget> _buildAppBarActions(BuildContext context) {
     return <Widget>[
-        _buildGPSButton(context),
-        _buildAddLocationButton(context),
-      ];
+      _buildGPSButton(context),
+      _buildAddLocationButton(context),
+    ];
   }
 
   IconButton _buildAddLocationButton(BuildContext context) {
     return IconButton(
-        splashColor: GeneralStyles.buttonSplashColor(),
-        icon: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-        onPressed: () {
-          GeneralAnimationSettings.buttonTapDelay();
-          showSearch(context: context, delegate: LocationSearch());
-        },
-      );
+      splashColor: GeneralStyles.buttonSplashColor(),
+      icon: Icon(
+        Icons.add,
+        color: Colors.white,
+      ),
+      onPressed: () {
+        GeneralAnimationSettings.buttonTapDelay();
+        showSearch(context: context, delegate: LocationSearch());
+      },
+    );
   }
 
   IconButton _buildGPSButton(BuildContext context) {
     return IconButton(
-        icon: Icon(
-          Icons.gps_fixed,
-          color: Colors.white,
-        ),
-        onPressed: () async {
-          GeneralAnimationSettings.buttonTapDelay();
-          return showDialog(
-              context: context,
-              builder: (context) {
-                return FutureBuilder(
-                    future: getCurrentLocation(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData &&
-                          snapshot.connectionState ==
-                              ConnectionState.done) {
-                        return AlertDialog(
-                          title: Text('Your Location'),
-                          actions: <Widget>[
-                            RaisedButton(
-                              color: Colors.blueGrey,
-                              onPressed: () {
-                                GeneralAnimationSettings.buttonTapDelay();
-                                Navigator.pop(context);
-                              },
-                              child:
-                                  Icon(Icons.close, color: Colors.white),
-                            ),
-                            RaisedButton(
-                              color: Colors.lightGreen,
-                              onPressed: () {
-                                GeneralAnimationSettings.buttonTapDelay();
-                              },
-                              child:
-                                  Icon(Icons.save, color: Colors.white),
-                            ),
-                          ],
-                          content: SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text('Location : '),
-                                Text(
-                                    'Latitude  : ${snapshot.data.latitude}'),
-                                Text(
-                                    'Longitude : ${snapshot.data.longitude}'),
-                                Text(
-                                    'Do you want to save this location?'),
-                              ],
-                            ),
-                          ),
-                        );
-                      } else if (snapshot.hasError) {
-                        return Text('Error');
-                      } else {
-                        return CustomProgressIndicator();
-                      }
-                    });
-              });
-        },
-      );
+      icon: Icon(
+        Icons.gps_fixed,
+        color: Colors.white,
+      ),
+      onPressed: () async {
+        GeneralAnimationSettings.buttonTapDelay();
+        return showDialog(
+            context: context,
+            builder: (context) {
+              return FutureBuilder(
+                  future: GeoLocationVMFutureProvider().getCurrentLocation(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData &&
+                        snapshot.connectionState == ConnectionState.done) {
+                      return ChangeNotifierProvider<GeoLocationViewModel>(
+                        create: (context) => snapshot.data,
+                        builder: (context, widget) {
+                          return AlertDialog(
+                            title: Text('Your Location'),
+                            actions: _buildAlertActions(context),
+                            content: _buildAlertContent(context),
+                          );
+                        },
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text('Error');
+                    } else {
+                      return CustomProgressIndicator();
+                    }
+                  });
+            });
+      },
+    );
   }
 
-  Future<LocationData> getCurrentLocation() async {
-    var location = new Location();
-    // var currentLocation = <String, double>{};
-    LocationData currentLocation;
-    try {
-      currentLocation = await location.getLocation();
-    } catch (e) {
-      currentLocation = null;
-    }
-    return currentLocation;
+  SingleChildScrollView _buildAlertContent(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Text('Location'),
+                flex: 1,
+              ),
+              Expanded(
+                flex: 2,
+                child: Text(
+                  '${Provider.of<GeoLocationViewModel>(context, listen: false).location.cityName}, ${Provider.of<GeoLocationViewModel>(context, listen: false).location.countryCode}',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Text('Latitude'),
+                flex: 1,
+              ),
+              Expanded(
+                flex: 2,
+                child: Text(
+                  '${Provider.of<GeoLocationViewModel>(context, listen: false).location.latitude}',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Text('Longitude'),
+                flex: 1,
+              ),
+              Expanded(
+                flex: 2,
+                child: Text(
+                  '${Provider.of<GeoLocationViewModel>(context, listen: false).location.longitude}',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+          Padding(
+              padding: EdgeInsets.only(top: 10),
+              child: Text('Do you want to save this location?')),
+        ],
+      ),
+    );
   }
+
+  List<Widget> _buildAlertActions(BuildContext context) {
+    return <Widget>[
+      RaisedButton(
+        color: Colors.blueGrey,
+        onPressed: () {
+          GeneralAnimationSettings.buttonTapDelay();
+          Navigator.pop(context);
+        },
+        child: Icon(Icons.close, color: Colors.white),
+      ),
+      RaisedButton(
+        color: Colors.lightGreen,
+        onPressed: () async {
+          GeneralAnimationSettings.buttonTapDelay();
+          await Provider.of<GeoLocationViewModel>(context, listen: false)
+              .addLocation();
+          Navigator.pop(context);
+          
+        },
+        child: Icon(Icons.save, color: Colors.white),
+      ),
+    ];
+  }
+
 }
 
 class LocationList extends StatefulWidget {
@@ -146,8 +194,8 @@ class LocationListState extends State<LocationList> {
     );
   }
 
-  GlobalKey<AnimatedListState> locationListViewKey =
-      GlobalKey<AnimatedListState>();
+  // GlobalKey<AnimatedListState> locationListViewKey =
+  //     GlobalKey<AnimatedListState>();
 
   Widget _buildLocationListView() {
     return FutureBuilder(
