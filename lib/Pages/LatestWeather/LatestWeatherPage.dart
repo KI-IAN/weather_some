@@ -135,16 +135,19 @@ class _LatestWeatherState extends State<_LatestWeather> {
                     style: TextStyle(
                       color: Colors.white,
                       fontStyle: FontStyle.normal,
-                      fontSize: 60,
+                      fontSize: 70,
                     ),
                   ),
-                  Text(
-                    '${Provider.of<CurrentWeatherViewModel>(context, listen: false).weather.description.toUpperCase()}',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontStyle: FontStyle.normal,
-                      fontSize: 25,
+                  Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      '${Provider.of<CurrentWeatherViewModel>(context, listen: false).weather.description.toUpperCase()}',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 25,
+                      ),
                     ),
                   ),
                   Row(
@@ -171,16 +174,19 @@ class _LatestWeatherState extends State<_LatestWeather> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(
-                        'Humidity : ',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 20,
+                      Padding(
+                        padding: EdgeInsets.only(right: 20),
+                        child: Text(
+                          'Humidity → ',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 20,
+                          ),
                         ),
                       ),
                       Text(
-                        '${Provider.of<CurrentWeatherViewModel>(context, listen: false).main.humidity}%',
+                        '${Provider.of<CurrentWeatherViewModel>(context, listen: false).main.humidity}% ',
                         style: TextStyle(
                           color: Colors.white,
                           fontStyle: FontStyle.normal,
@@ -193,7 +199,7 @@ class _LatestWeatherState extends State<_LatestWeather> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'Wind : ',
+                        'Wind Speed → ',
                         style: TextStyle(
                           color: Colors.white,
                           fontStyle: FontStyle.normal,
@@ -210,10 +216,6 @@ class _LatestWeatherState extends State<_LatestWeather> {
                       ),
                     ],
                   ),
-                  Visibility(
-                      visible: true,
-                      child: Text(
-                          '${Provider.of<LocationViewModel>(context, listen: false).latitude} / ${Provider.of<LocationViewModel>(context, listen: false).longitude}')),
                 ],
               );
             },
