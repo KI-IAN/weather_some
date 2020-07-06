@@ -18,6 +18,7 @@ class WeatherForecastPage extends StatelessWidget {
                 return Scaffold(
                   backgroundColor: Colors.indigo[300],
                   appBar: AppBar(
+                    elevation: 0,
                     title: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[

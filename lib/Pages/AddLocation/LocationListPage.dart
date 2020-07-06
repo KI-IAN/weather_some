@@ -18,92 +18,104 @@ class LocationListPage extends StatelessWidget {
 
   Widget _buildScaffold(BuildContext context) => Scaffold(
         backgroundColor: GeneralStyles.appPrimaryColor(),
-        appBar: AppBar(
-          title: Text(EnglishTexts.addLocation_titleBarLabel),
-          backgroundColor: GeneralStyles.appPrimaryColor(),
-          elevation: 0,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.gps_fixed,
-                color: Colors.white,
-              ),
-              onPressed: () async {
-                GeneralAnimationSettings.buttonTapDelay();
-
-                // //Get Current Location
-                // var currentLocation = await getCurrentLocation();
-
-                return showDialog(
-                    context: context,
-                    builder: (context) {
-                      return FutureBuilder(
-                          future: getCurrentLocation(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData &&
-                                snapshot.connectionState ==
-                                    ConnectionState.done) {
-                              return AlertDialog(
-                                title: Text('GPS Location'),
-                                actions: <Widget>[
-                                  RaisedButton(
-                                    color: Colors.blueGrey,
-                                    onPressed: () {
-                                      GeneralAnimationSettings.buttonTapDelay();
-                                      Navigator.pop(context);
-                                    },
-                                    child:
-                                        Icon(Icons.close, color: Colors.white),
-                                  ),
-                                  RaisedButton(
-                                    color: Colors.lightGreen,
-                                    onPressed: () {
-                                      GeneralAnimationSettings.buttonTapDelay();
-                                    },
-                                    child:
-                                        Icon(Icons.save, color: Colors.white),
-                                  ),
-                                ],
-                                content: SingleChildScrollView(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text('Location : '),
-                                      Text(
-                                          'Latitude  : ${snapshot.data.latitude}'),
-                                      Text(
-                                          'Longitude : ${snapshot.data.longitude}'),
-                                      Text(
-                                          'Do you want to save this location?'),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            } else if (snapshot.hasError) {
-                              return Text('Error');
-                            } else {
-                              return CustomProgressIndicator();
-                            }
-                          });
-                    });
-              },
-            ),
-            IconButton(
-              splashColor: GeneralStyles.buttonSplashColor(),
-              icon: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                GeneralAnimationSettings.buttonTapDelay();
-                showSearch(context: context, delegate: LocationSearch());
-              },
-            ),
-          ],
-        ),
+        appBar: _buildAppBar(context),
         body: LocationList(),
       );
+
+  AppBar _buildAppBar(BuildContext context) {
+    return AppBar(
+        title: Text(EnglishTexts.addLocation_titleBarLabel),
+        backgroundColor: GeneralStyles.appPrimaryColor(),
+        elevation: 0,
+        actions: _buildAppBarActions(context),
+      );
+  }
+
+  List<Widget> _buildAppBarActions(BuildContext context) {
+    return <Widget>[
+        _buildGPSButton(context),
+        _buildAddLocationButton(context),
+      ];
+  }
+
+  IconButton _buildAddLocationButton(BuildContext context) {
+    return IconButton(
+        splashColor: GeneralStyles.buttonSplashColor(),
+        icon: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          GeneralAnimationSettings.buttonTapDelay();
+          showSearch(context: context, delegate: LocationSearch());
+        },
+      );
+  }
+
+  IconButton _buildGPSButton(BuildContext context) {
+    return IconButton(
+        icon: Icon(
+          Icons.gps_fixed,
+          color: Colors.white,
+        ),
+        onPressed: () async {
+          GeneralAnimationSettings.buttonTapDelay();
+          return showDialog(
+              context: context,
+              builder: (context) {
+                return FutureBuilder(
+                    future: getCurrentLocation(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData &&
+                          snapshot.connectionState ==
+                              ConnectionState.done) {
+                        return AlertDialog(
+                          title: Text('GPS Location'),
+                          actions: <Widget>[
+                            RaisedButton(
+                              color: Colors.blueGrey,
+                              onPressed: () {
+                                GeneralAnimationSettings.buttonTapDelay();
+                                Navigator.pop(context);
+                              },
+                              child:
+                                  Icon(Icons.close, color: Colors.white),
+                            ),
+                            RaisedButton(
+                              color: Colors.lightGreen,
+                              onPressed: () {
+                                GeneralAnimationSettings.buttonTapDelay();
+                              },
+                              child:
+                                  Icon(Icons.save, color: Colors.white),
+                            ),
+                          ],
+                          content: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text('Location : '),
+                                Text(
+                                    'Latitude  : ${snapshot.data.latitude}'),
+                                Text(
+                                    'Longitude : ${snapshot.data.longitude}'),
+                                Text(
+                                    'Do you want to save this location?'),
+                              ],
+                            ),
+                          ),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text('Error');
+                      } else {
+                        return CustomProgressIndicator();
+                      }
+                    });
+              });
+        },
+      );
+  }
 
   Future<LocationData> getCurrentLocation() async {
     var location = new Location();

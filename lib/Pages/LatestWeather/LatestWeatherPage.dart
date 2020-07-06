@@ -19,6 +19,7 @@ class LatestWeatherPage extends StatelessWidget {
                 return Scaffold(
                   backgroundColor: GeneralStyles.appPrimaryColor(),
                   appBar: AppBar(
+                    elevation: 0,
                     title: Text(
                         Provider.of<LocationViewModel>(context, listen: false)
                             .cityName),
