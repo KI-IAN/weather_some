@@ -34,12 +34,15 @@ class WeatherForecastPage extends StatelessWidget {
                     ),
                     backgroundColor: Colors.indigo[300],
                     actions: <Widget>[
-                      IconButton(
-                        icon: Icon(
-                          Icons.refresh,
-                          color: Colors.white,
+                      Visibility(
+                        visible: false,
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.refresh,
+                            color: Colors.white,
+                          ),
+                          onPressed: null,
                         ),
-                        onPressed: null,
                       ),
                     ],
                   ),
@@ -170,7 +173,6 @@ class WeatherForecastState extends State<WeatherForecast> {
                                 },
                               ),
                             ),
-                            
                             Expanded(
                               flex: 1,
                               child: Column(

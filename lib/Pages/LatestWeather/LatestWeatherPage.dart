@@ -35,12 +35,15 @@ class LatestWeatherPage extends StatelessWidget {
                     ),
                     backgroundColor: GeneralStyles.appPrimaryColor(),
                     actions: <Widget>[
-                      IconButton(
-                        icon: Icon(
-                          Icons.refresh,
-                          color: Colors.white,
+                      Visibility(
+                        visible: false,
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.refresh,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {},
                         ),
-                        onPressed: () {},
                       ),
                     ],
                   ),
@@ -131,7 +134,6 @@ class _LatestWeatherState extends State<_LatestWeather> {
                         );
                       },
                     ),
-
                   ),
                   Text(
                     '${Provider.of<CurrentWeatherViewModel>(context, listen: false).main.temp}°C',
