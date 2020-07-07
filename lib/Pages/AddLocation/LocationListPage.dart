@@ -50,7 +50,7 @@ class LocationListPageState extends State<LocationListPage> {
 
   IconButton _buildAddLocationButton(BuildContext context) {
     return IconButton(
-      splashColor: GeneralStyles.buttonSplashColorBlack(),
+      splashColor: GeneralStyles.buttonSplashColor(),
       icon: Icon(
         Icons.add,
         color: Colors.white,
@@ -334,7 +334,7 @@ class LocationListState extends State<LocationList> {
                     splashColor: GeneralStyles.buttonSplashColorBlack(),
                     icon: Icon(Icons.close),
                     onPressed: () async {
-                      GeneralAnimationSettings.buttonTapDelay();
+                      await GeneralAnimationSettings.buttonTapDelay();
                       await removeLocation(
                           context, currentLocationItem, currentIndex);
                     },

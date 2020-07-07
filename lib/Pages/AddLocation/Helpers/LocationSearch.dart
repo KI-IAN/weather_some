@@ -12,7 +12,7 @@ class LocationSearch extends SearchDelegate<CityInfoViewModel> {
   List<Widget> buildActions(BuildContext context) {
     return <Widget>[
       IconButton(
-        splashColor: GeneralStyles.buttonSplashColor(),
+        splashColor: GeneralStyles.buttonSplashColorBlack(),
         icon: Icon(Icons.clear),
         onPressed: () {
           GeneralAnimationSettings.buttonTapDelay();
