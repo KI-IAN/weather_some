@@ -13,7 +13,7 @@ class FetchWeatherData {
   }
 
   String _exceptionMessage =
-      'Failed to load data frow web service. Please check your Internet Connection.';
+      'Failed to load data from web service. Please check your Internet Connection.';
 
   FetchWeatherData({this.baseURL, this.query});
 
