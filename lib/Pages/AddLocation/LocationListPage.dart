@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_some/Common/Animations/GeneralAnimationSettings.dart';
 import 'package:weather_some/Common/CustomWidgets/ExceptionHandler.dart';
 import 'package:weather_some/Common/CustomWidgets/CustomProgressIndicator.dart';
 import 'package:weather_some/Common/Styles/GeneralStyles.dart';
 import 'package:weather_some/LanguageFiles/EnglishTexts.dart';
-import 'package:weather_some/Pages/AddLocation/Helpers/LocationListPageHelper.dart';
 import 'package:weather_some/Pages/AddLocation/Helpers/LocationSearch.dart';
 import 'package:weather_some/Pages/AddLocation/ViewModels/GeoLocationVMFutureProvider.dart';
 import 'package:weather_some/Pages/AddLocation/ViewModels/GeoLocationViewModel.dart';

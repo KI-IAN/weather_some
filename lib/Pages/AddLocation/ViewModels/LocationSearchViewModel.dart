@@ -1,7 +1,6 @@
 import 'package:weather_some/Common/ViewModels/BaseViewModel.dart';
 import 'package:weather_some/Common/ViewModels/SimpleMaps/CityInfoViewModels.dart';
 import 'package:weather_some/Pages/AddLocation/Helpers/LocationSearchHelper.dart';
-import 'package:weather_some/Repository/SavedLocationRepository.dart';
 
 class LocationSearchViewModel extends BaseViewModel {
   List<CityInfoViewModel> _cities;

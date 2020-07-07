@@ -74,7 +74,6 @@ class _LatestWeatherState extends State<_LatestWeather> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchWeatherData();
   }
@@ -89,11 +88,9 @@ class _LatestWeatherState extends State<_LatestWeather> {
     String tempBaseUrl = 'https://api.openweathermap.org/data/2.5';
     String tempApiKey = 'df8e460123d8c8ba74db460203f42191';
     String tempUnit = 'metric';
-    // String tempQueryParameters =
-    //     'weather?q=Cheras&units=metric&appid=$tempApiKey';
 
     String tempQueryParameters =
-        'weather?lat=$latitude&lon=$longitude&units=metric&appid=$tempApiKey';
+        'weather?lat=$latitude&lon=$longitude&units=$tempUnit&appid=$tempApiKey';
 
     latestWeatherData =
         FetchWeatherData(baseURL: tempBaseUrl, query: tempQueryParameters)
@@ -106,12 +103,6 @@ class _LatestWeatherState extends State<_LatestWeather> {
   }
 
   Widget _buildLatestWeatherView() {
-    // String tempBaseUrl = 'https://api.openweathermap.org/data/2.5';
-    // String tempApiKey = 'df8e460123d8c8ba74db460203f42191';
-    // String tempUnit = 'metric';
-    // String tempQueryParameters =
-    //     'weather?q=Cheras&units=metric&appid=$tempApiKey';
-
     return FutureBuilder<CurrentWeatherViewModel>(
       // future: FetchWeatherData(baseURL: tempBaseUrl, query: tempQueryParameters)
       //     .fetchLatestWeather(),
@@ -125,9 +116,6 @@ class _LatestWeatherState extends State<_LatestWeather> {
               return Column(
                 children: <Widget>[
                   Center(
-                      // child: Image(
-                      //     image: AssetImage(
-                      //         ImageAssetsLocation.placeHolderImage))),
                       child: Image(
                           image: NetworkImage(
                               'http://openweathermap.org/img/wn/${Provider.of<CurrentWeatherViewModel>(context, listen: false).weather.icon}@4x.png'))),

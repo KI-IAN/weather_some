@@ -1,6 +1,4 @@
 import 'package:weather_some/Common/ViewModels/BaseViewModel.dart';
-import 'package:weather_some/Common/ViewModels/OpenWeatherMapViewModels/CurrentWeather/MainViewModel.dart';
-import 'package:weather_some/Common/ViewModels/OpenWeatherMapViewModels/CurrentWeather/WeatherViewModel.dart';
 import 'package:weather_some/Common/ViewModels/OpenWeatherMapViewModels/WeatherForecast/CityViewModel.dart';
 import 'package:weather_some/Common/ViewModels/OpenWeatherMapViewModels/WeatherForecast/ForecastListViewModel.dart';
 
