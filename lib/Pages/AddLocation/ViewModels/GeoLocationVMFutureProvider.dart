@@ -9,7 +9,14 @@ class GeoLocationVMFutureProvider {
       var isServiceEnabled = await _isServiceEnabled();
 
       if (isServiceEnabled == false) {
-        throw Exception('Location is not enabled. Please enable it to get your current location.');
+        throw Exception(
+            'Location is not enabled. Please enable it to get your current location.');
+      }
+
+      var hasLocationPermission = await _hasLocationPermission();
+      if (hasLocationPermission != PermissionStatus.GRANTED) {
+        throw Exception(
+            'Location permission is denied. Please grant permission to get your current location.');
       }
 
       var gpsLocation = await _getGPSLocation();
@@ -68,5 +75,17 @@ class GeoLocationVMFutureProvider {
     }
 
     return isServiceEnabled;
+  }
+
+  Future<PermissionStatus> _hasLocationPermission() async {
+    var location = new Location();
+
+    var hasLocationPermission = await location.hasPermission();
+
+    if (hasLocationPermission != PermissionStatus.GRANTED) {
+      hasLocationPermission = await location.requestPermission();
+    }
+
+    return hasLocationPermission;
   }
 }
