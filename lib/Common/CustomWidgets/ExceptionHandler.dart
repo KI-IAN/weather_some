@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
-class ConnectivityIssue extends StatelessWidget {
+class ExceptionHandler extends StatelessWidget {
+  String exceptionMessage;
+
+  ExceptionHandler({@required this.exceptionMessage});
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -12,17 +16,15 @@ class ConnectivityIssue extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  'Whoops!!!!',
-                  style: TextStyle(fontSize: 40, color: Colors.red[400]),
-                ),
+              Icon(
+                Icons.error,
+                color: Colors.red,
+                size: 60,
               ),
               Padding(
                 padding: EdgeInsets.all(10),
                 child: Text(
-                  'Something went wrong. Please check your internet connection.',
+                  '${exceptionMessage.replaceAll("Exception: ", "").replaceAll("Exception:", "")}',
                   style: TextStyle(),
                 ),
               )

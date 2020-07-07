@@ -12,25 +12,36 @@ class FetchWeatherData {
     return '$baseURL/$query';
   }
 
+  String _exceptionMessage =
+      'Failed to load data frow web service. Please check your Internet Connection.';
+
   FetchWeatherData({this.baseURL, this.query});
 
   Future<CurrentWeatherViewModel> fetchLatestWeather() async {
-    final response = await http.get(fullURL);
+    try {
+      final response = await http.get(fullURL);
 
-    if (response.statusCode == 200) {
-      return CurrentWeatherViewModel.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to load data...');
+      if (response.statusCode == 200) {
+        return CurrentWeatherViewModel.fromJson(json.decode(response.body));
+      } else {
+        throw Exception(_exceptionMessage);
+      }
+    } catch (ex) {
+      throw Exception(_exceptionMessage);
     }
   }
 
   Future<WeatherForecastViewModel> fetchWeatherForecast() async {
-    final response = await http.get(fullURL);
+    try {
+      final response = await http.get(fullURL);
 
-    if (response.statusCode == 200) {
-      return WeatherForecastViewModel.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to load data...');
+      if (response.statusCode == 200) {
+        return WeatherForecastViewModel.fromJson(json.decode(response.body));
+      } else {
+        throw Exception(_exceptionMessage);
+      }
+    } catch (ex) {
+      throw Exception(_exceptionMessage);
     }
   }
 }

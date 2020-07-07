@@ -5,13 +5,23 @@ import 'package:weather_some/Pages/AddLocation/ViewModels/LocationViewModel.dart
 
 class GeoLocationVMFutureProvider {
   Future<GeoLocationViewModel> getCurrentLocation() async {
-    var gpsLocation = await _getGPSLocation();
-    var geoLocationData =
-        await _fetchWeatherData(gpsLocation.latitude, gpsLocation.longitude);
+    try {
+      var isServiceEnabled = await _isServiceEnabled();
 
-    return GeoLocationViewModel(
-      location: geoLocationData,
-    );
+      if (isServiceEnabled == false) {
+        throw Exception('Location is not enabled. Please enable it to get your current location.');
+      }
+
+      var gpsLocation = await _getGPSLocation();
+      var geoLocationData =
+          await _fetchWeatherData(gpsLocation.latitude, gpsLocation.longitude);
+
+      return GeoLocationViewModel(
+        location: geoLocationData,
+      );
+    } catch (ex) {
+      throw ex;
+    }
   }
 
   Future<LocationViewModel> _fetchWeatherData(
@@ -46,5 +56,17 @@ class GeoLocationVMFutureProvider {
       currentLocation = null;
     }
     return currentLocation;
+  }
+
+  Future<bool> _isServiceEnabled() async {
+    var location = new Location();
+
+    var isServiceEnabled = await location.serviceEnabled();
+
+    if (isServiceEnabled == false) {
+      isServiceEnabled = await location.requestService();
+    }
+
+    return isServiceEnabled;
   }
 }

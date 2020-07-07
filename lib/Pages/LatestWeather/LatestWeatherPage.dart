@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_some/Common/CustomWidgets/ConnectivityIssue.dart';
+import 'package:weather_some/Common/CustomWidgets/ExceptionHandler.dart';
 import 'package:weather_some/Common/CustomWidgets/CustomProgressIndicator.dart';
 import 'package:weather_some/Common/Helpers/FetchWeatherData.dart';
 import 'package:weather_some/Common/Styles/GeneralStyles.dart';
@@ -222,7 +222,9 @@ class _LatestWeatherState extends State<_LatestWeather> {
             },
           );
         } else if (snapshot.hasError) {
-          return ConnectivityIssue();
+          return ExceptionHandler(
+            exceptionMessage: snapshot.error.toString(),
+          );
         } else {
           return CustomProgressIndicator();
         }
