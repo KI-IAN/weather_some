@@ -120,19 +120,23 @@ class _LatestWeatherState extends State<_LatestWeather> {
                   'http://openweathermap.org/img/wn/${Provider.of<CurrentWeatherViewModel>(context, listen: false).weather.icon}@4x.png';
               return Column(
                 children: <Widget>[
-                  Center(
-                    child: Image.network(
-                      imageUrl,
-                      // fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            backgroundColor: Colors.white,
-                          ),
-                        );
-                      },
+                  SizedBox(
+                    height: 250,
+                    width: 250,
+                    child: Center(
+                      child: Image.network(
+                        imageUrl,
+                        // fit: BoxFit.cover,
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(
+                              backgroundColor: Colors.white,
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                   Text(
