@@ -46,6 +46,7 @@ class CurrentWeatherViewModel extends BaseViewModel {
   ///cod Internal parameter
   num cod;
 
+
   CurrentWeatherViewModel(
       {this.coordinate,
       this.weather,

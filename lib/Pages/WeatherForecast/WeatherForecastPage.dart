@@ -83,8 +83,7 @@ class WeatherForecastState extends State<WeatherForecast> {
     String tempBaseUrl = 'https://api.openweathermap.org/data/2.5';
     String tempApiKey = 'df8e460123d8c8ba74db460203f42191';
     String tempUnit = 'metric';
-    // String tempQueryParameters =
-    //     'forecast?q=Cheras&units=metric&appid=$tempApiKey';
+
     String tempQueryParameters =
         'forecast?lat=$latitude&lon=$longitude&units=$tempUnit&appid=$tempApiKey';
 
@@ -112,6 +111,9 @@ class WeatherForecastState extends State<WeatherForecast> {
                         .forecastList
                         .elementAt(currentIndex);
 
+                    var iconURL =
+                        'http://openweathermap.org/img/wn/${currentItem.weather.icon}@4x.png';
+
                     return Container(
                       padding: EdgeInsets.all(5),
                       height: 100,
@@ -129,19 +131,23 @@ class WeatherForecastState extends State<WeatherForecast> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    Text(
-                                      currentItem.foreCastedDate,
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.black,
+                                    Expanded(
+                                      child: Text(
+                                        currentItem.foreCastedDate,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.black,
+                                        ),
                                       ),
                                     ),
-                                    Text(
-                                      currentItem.weather.description
-                                          .toUpperCase(),
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.black,
+                                    Expanded(
+                                      child: Text(
+                                        currentItem.weather.description
+                                            .toUpperCase(),
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.black,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -150,15 +156,21 @@ class WeatherForecastState extends State<WeatherForecast> {
                             ),
                             Expanded(
                               flex: 1,
-                              child: Image(
-                                width: 100,
-                                height: 100,
-                                // image: AssetImage(
-                                //     ImageAssetsLocation.placeHolderImage)
-                                image: NetworkImage(
-                                    'http://openweathermap.org/img/wn/${currentItem.weather.icon}@4x.png'),
+                              child: Image.network(
+                                iconURL,
+                                loadingBuilder: (BuildContext context,
+                                    Widget child,
+                                    ImageChunkEvent loadingProgress) {
+                                  if (loadingProgress == null) return child;
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      backgroundColor: Colors.white,
+                                    ),
+                                  );
+                                },
                               ),
                             ),
+                            
                             Expanded(
                               flex: 1,
                               child: Column(

@@ -113,12 +113,26 @@ class _LatestWeatherState extends State<_LatestWeather> {
           return ChangeNotifierProvider<CurrentWeatherViewModel>(
             create: (context) => snapshot.data,
             builder: (context, widget) {
+              var imageUrl =
+                  'http://openweathermap.org/img/wn/${Provider.of<CurrentWeatherViewModel>(context, listen: false).weather.icon}@4x.png';
               return Column(
                 children: <Widget>[
                   Center(
-                      child: Image(
-                          image: NetworkImage(
-                              'http://openweathermap.org/img/wn/${Provider.of<CurrentWeatherViewModel>(context, listen: false).weather.icon}@4x.png'))),
+                    child: Image.network(
+                      imageUrl,
+                      // fit: BoxFit.cover,
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            backgroundColor: Colors.white,
+                          ),
+                        );
+                      },
+                    ),
+
+                  ),
                   Text(
                     '${Provider.of<CurrentWeatherViewModel>(context, listen: false).main.temp}°C',
                     style: TextStyle(
