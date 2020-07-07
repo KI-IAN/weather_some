@@ -50,7 +50,7 @@ class LocationListPageState extends State<LocationListPage> {
 
   IconButton _buildAddLocationButton(BuildContext context) {
     return IconButton(
-      splashColor: GeneralStyles.buttonSplashColor(),
+      splashColor: GeneralStyles.buttonSplashColorBlack(),
       icon: Icon(
         Icons.add,
         color: Colors.white,
@@ -64,6 +64,7 @@ class LocationListPageState extends State<LocationListPage> {
 
   IconButton _buildGPSButton(BuildContext context) {
     return IconButton(
+      splashColor: GeneralStyles.buttonSplashColor(),
       icon: Icon(
         Icons.gps_fixed,
         color: Colors.white,
@@ -162,6 +163,7 @@ class LocationListPageState extends State<LocationListPage> {
   List<Widget> _buildAlertActions(BuildContext context) {
     return <Widget>[
       RaisedButton(
+        splashColor: GeneralStyles.buttonSplashColor(),
         color: Colors.blueGrey,
         onPressed: () {
           GeneralAnimationSettings.buttonTapDelay();
@@ -170,6 +172,7 @@ class LocationListPageState extends State<LocationListPage> {
         child: Icon(Icons.close, color: Colors.white),
       ),
       RaisedButton(
+        splashColor: GeneralStyles.buttonSplashColor(),
         color: Colors.lightGreen,
         onPressed: () async {
           GeneralAnimationSettings.buttonTapDelay();
@@ -328,8 +331,10 @@ class LocationListState extends State<LocationList> {
                           .elementAt(currentIndex)
                           .isDeleteableProp,
                   child: IconButton(
+                    splashColor: GeneralStyles.buttonSplashColorBlack(),
                     icon: Icon(Icons.close),
                     onPressed: () async {
+                      GeneralAnimationSettings.buttonTapDelay();
                       await removeLocation(
                           context, currentLocationItem, currentIndex);
                     },

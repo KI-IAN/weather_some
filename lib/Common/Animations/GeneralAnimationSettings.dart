@@ -1,4 +1,4 @@
 class GeneralAnimationSettings {
   static Future<dynamic> buttonTapDelay() =>
-      Future.delayed(Duration(milliseconds: 50));
+      Future.delayed(Duration(milliseconds: 100));
 }

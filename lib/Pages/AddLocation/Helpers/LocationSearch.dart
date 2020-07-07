@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_some/Common/Animations/GeneralAnimationSettings.dart';
+import 'package:weather_some/Common/Styles/GeneralStyles.dart';
 import 'package:weather_some/Common/ViewModels/SimpleMaps/CityInfoViewModels.dart';
 import 'package:weather_some/Pages/AddLocation/Helpers/LocationSearchHelper.dart';
 import 'package:weather_some/Pages/AddLocation/ViewModels/LocationSearchViewModel.dart';
@@ -11,8 +12,10 @@ class LocationSearch extends SearchDelegate<CityInfoViewModel> {
   List<Widget> buildActions(BuildContext context) {
     return <Widget>[
       IconButton(
+        splashColor: GeneralStyles.buttonSplashColor(),
         icon: Icon(Icons.clear),
         onPressed: () {
+          GeneralAnimationSettings.buttonTapDelay();
           resetQuery();
         },
       ),
@@ -22,8 +25,10 @@ class LocationSearch extends SearchDelegate<CityInfoViewModel> {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
+      splashColor: GeneralStyles.buttonSplashColorBlack(),
       icon: Icon(Icons.arrow_back),
       onPressed: () {
+        GeneralAnimationSettings.buttonTapDelay();
         Navigator.pop(context);
       },
     );
