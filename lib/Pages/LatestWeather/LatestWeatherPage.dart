@@ -89,7 +89,7 @@ class _LatestWeatherState extends State<_LatestWeather> {
         Provider.of<LocationViewModel>(context, listen: false).longitude;
 
     String tempBaseUrl = 'https://api.openweathermap.org/data/2.5';
-    String tempApiKey = 'df8e460123d8c8ba74db460203f42191';
+    String tempApiKey = 'User-Your-OWN-API-TOKEN-KEY-Received-From-OpenWeatherMap.Org';
     String tempUnit = 'metric';
 
     String tempQueryParameters =
